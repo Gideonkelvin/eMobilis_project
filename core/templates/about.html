@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<section id="about" class="py-5">
+    <div class="container">
+
+        <!-- History of the School -->
+        <div class="row mb-5 align-items-center">
+            <div class="col-md-6">
+                <h3 class="fw-bold text-secondary mb-4">{{ history.title }}</h3>
+                <p class="text-muted">
+                    Established in <strong>{{ history.year_established }}</strong>, our school has a rich legacy of providing exceptional education.
+                </p>
+                <p class="text-muted">{{ history.description }}</p>
+                <p class="text-muted">
+                    Key milestones include <em>{{ history.milestones }}</em>.
+                </p>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="{{ history.image.url }}" alt="School History" class="img-fluid rounded shadow">
+            </div>
+        </div>
+
+        <!-- Our Values -->
+        <div class="row mb-5">
+            <div class="col">
+                <h3 class="fw-bold text-secondary mb-4">Our Values</h3>
+                <div class="row">
+                    {% for value in values %}
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="p-3 text-center shadow-sm rounded bg-light">
+                            <h5 class="text-primary">{{ value.name }}</h5>
+                            <p class="text-muted">{{ value.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Leadership and Staff -->
+        <div class="row mb-5">
+            <div class="col">
+                <h3 class="fw-bold text-secondary mb-4">Leadership and Staff</h3>
+                <div class="row">
+                    {% for leader in leadership %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm">
+                            <img src="{{ leader.image.url }}" alt="{{ leader.name }}" class="card-img-top rounded-circle">
+                            <div class="card-body text-center">
+                                <h5 class="text-secondary">{{ leader.name }}</h5>
+                                <p>{{ leader.position }}</p>
+                                <p class="text-muted">{{ leader.bio }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Accreditation and Achievements -->
+        <div class="row mb-5">
+            <div class="col">
+                <h3 class="fw-bold text-secondary mb-4">Accreditation and Achievements</h3>
+                <ul class="achievements-list">
+                    {% for achievement in achievements %}
+                    <li><i class="fas fa-check-circle"></i> {{ achievement.description }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- School Facilities -->
+        <div class="row">
+            <div class="col">
+                <h3 class="fw-bold text-secondary mb-4">School Facilities</h3>
+                <p class="text-muted">Our campus is equipped with world-class facilities designed to enhance the learning experience:</p>
+                <ul class="facilities-list">
+                    {% for facility in facilities %}
+                    <li><i class="{{ facility.icon }}"></i> {{ facility.name }}: {{ facility.description }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

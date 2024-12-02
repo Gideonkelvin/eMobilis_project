@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<main class="main">
+  <section id="management" class="management section">
+    <div class="container">
+      <div class="row gy-5">
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="service-box">
+            <h4>{{ management_detail.title }}</h4>
+            <div class="services-list">
+              <a href="#" class="active"><i class="bi bi-arrow-right-circle"></i><span>Management</span></a>
+              <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Students Leadership</span></a>
+              <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Academics</span></a>
+            </div>
+          </div>
+
+          <div class="service-box">
+            <h4>Download Catalog</h4>
+            <div class="download-catalog">
+              {% if management_detail.catalog_pdf %}
+              <a href="{{ management_detail.catalog_pdf.url }}"><i class="bi bi-filetype-pdf"></i><span>Catalog PDF</span></a>
+              {% endif %}
+              {% if management_detail.catalog_doc %}
+              <a href="{{ management_detail.catalog_doc.url }}"><i class="bi bi-file-earmark-word"></i><span>Catalog DOC</span></a>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="help-box d-flex flex-column justify-content-center align-items-center">
+            <i class="bi bi-headset help-icon"></i>
+            <h4>Have a Question?</h4>
+            <p class="d-flex align-items-center mt-2 mb-0">
+              <i class="bi bi-telephone me-2"></i> <span>{{ management_detail.phone }}</span>
+            </p>
+            <p class="d-flex align-items-center mt-1 mb-0">
+              <i class="bi bi-envelope me-2"></i> <a href="mailto:{{ management_detail.email }}">{{ management_detail.email }}</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
+          <img src="{{ management_detail.image.url }}" alt="" class="img-fluid services-img">
+          <h3>{{ management_detail.title }}</h3>
+          <p>{{ management_detail.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
