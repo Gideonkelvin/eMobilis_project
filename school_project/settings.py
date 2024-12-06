@@ -32,14 +32,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'core',
+    'dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'dashboard',
 ]
 
 AUTH_USER_MODEL = 'core.CustomUser'
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'school_project.wsgi.application'
 DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'school_project',
+        'NAME': 'emobilis',
         'USER': 'root',
         'PASSWORD': '',
         'HOST':'localhost',

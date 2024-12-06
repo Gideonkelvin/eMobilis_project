@@ -61,16 +61,17 @@ def academics(request):
 def user_registration(request):  # sourcery skip: extract-method
     form = RegistrationForm()
     if request.method == 'POST':
+        print(request.POST)
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             # send registration email
-            send_registration_email(user)
+            # send_registration_email(user)
             user.username = user.username.lower()
             user.save()
             messages.success(request, 'You have singed up successfully.')
             login(request, user)
-            return redirect('/')
+            return redirect('dashboard')
     return render(request, 'registration_form.html', {'form': form})
 
 def login_user(request):
@@ -96,8 +97,8 @@ def login_user(request):
     else:
         messages.error(request, 'Please activate your account')
         return render (request, 'login.html')
-    return redirect('/')
+    return redirect('dashboard')
     
 def logout_user(request):
     logout(request)
-    return redirect('login')
+    return redirect('/')

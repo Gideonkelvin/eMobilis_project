@@ -8,7 +8,7 @@
         <!-- History of the School -->
         <div class="row mb-5 align-items-center">
             <div class="col-md-6">
-                <h3 class="fw-bold text-secondary mb-4">{{ history.title }}</h3>
+                <h3 class="fw-bold text-success mb-4">{{ history.title }}</h3>
                 <p class="text-muted">
                     Established in <strong>{{ history.year_established }}</strong>, our school has a rich legacy of providing exceptional education.
                 </p>
@@ -25,7 +25,7 @@
         <!-- Our Values -->
         <div class="row mb-5">
             <div class="col">
-                <h3 class="fw-bold text-secondary mb-4">Our Values</h3>
+                <h3 class="fw-bold text-success mb-4">Our Values</h3>
                 <div class="row">
                     {% for value in values %}
                     <div class="col-md-6 col-lg-3 mb-4">
@@ -42,15 +42,15 @@
         <!-- Leadership and Staff -->
         <div class="row mb-5">
             <div class="col">
-                <h3 class="fw-bold text-secondary mb-4">Leadership and Staff</h3>
+                <h3 class="fw-bold text-success mb-4">Leadership and Staff</h3>
                 <div class="row">
                     {% for leader in leadership %}
                     <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm">
-                            <img src="{{ leader.image.url }}" alt="{{ leader.name }}" class="card-img-top rounded-circle">
+                        <div class="card shadow-sm border-0">
+                            <img src="{{ leader.image.url }}" alt="{{ leader.name }}" class="card-img-top rounded-circle fixed-leader-img">
                             <div class="card-body text-center">
                                 <h5 class="text-secondary">{{ leader.name }}</h5>
-                                <p>{{ leader.position }}</p>
+                                <p class="text-muted">{{ leader.position }}</p>
                                 <p class="text-muted">{{ leader.bio }}</p>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
         <!-- Accreditation and Achievements -->
         <div class="row mb-5">
             <div class="col">
-                <h3 class="fw-bold text-secondary mb-4">Accreditation and Achievements</h3>
+                <h3 class="fw-bold text-success mb-4">Accreditation and Achievements</h3>
                 <ul class="achievements-list">
                     {% for achievement in achievements %}
                     <li><i class="fas fa-check-circle"></i> {{ achievement.description }}</li>
@@ -75,7 +75,7 @@
         <!-- School Facilities -->
         <div class="row">
             <div class="col">
-                <h3 class="fw-bold text-secondary mb-4">School Facilities</h3>
+                <h3 class="fw-bold text-success mb-4">School Facilities</h3>
                 <p class="text-muted">Our campus is equipped with world-class facilities designed to enhance the learning experience:</p>
                 <ul class="facilities-list">
                     {% for facility in facilities %}
@@ -87,4 +87,88 @@
 
     </div>
 </section>
+
+<!-- Internal CSS -->
+<style>
+    /* General Section Styles */
+    #about {
+        background-color: #f8f9fa;
+    }
+
+    h3 {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #28a745;
+    }
+
+    .text-muted {
+        color: #6c757d;
+    }
+
+    /* Card Styles for Leadership */
+    .card-img-top {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+
+    /* Fixed Image Size for Leaders */
+    .fixed-leader-img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 20px;
+    }
+
+    /* Shadow and Hover Effects for Cards */
+    .card {
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Milestones and List Styling */
+    ul.achievements-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    ul.achievements-list li {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    ul.achievements-list li i {
+        color: #28a745;
+        margin-right: 10px;
+    }
+
+    ul.facilities-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    ul.facilities-list li {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    ul.facilities-list li i {
+        color: #28a745;
+        margin-right: 10px;
+    }
+
+    /* Spacing for Top Students Section */
+    .row.mb-5 {
+        margin-bottom: 3rem;
+    }
+</style>
 {% endblock %}

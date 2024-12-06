@@ -8,89 +8,166 @@
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
     <h2>News and Events</h2>
-    <p>Recent News and Events<br></p>
-  </div><!-- End Section Title -->
+    <p>Recent News and Events</p>
+  </div>
 
   <div class="container">
     <div class="recent-posts-wrapper" id="recent-posts-wrapper">
-      <div class="recent-posts-content">
-        {% for item in news_items %}
-          <div class="post-item" data-aos="fade-up" data-aos-delay="100">
-            <article>
-
-              <div class="post-img">
-                <img src="{{ item.images.url }}" alt="{{ item.title }}" class="img-fluid">
-              </div>
-
-              <div class="post-content">
-                <h3 class="title">
-                  <a href="blog-details.html">{{ item.title }}</a>
-                </h3>
-                <p class="post-category">{{ item.description }}</p>
-              </div>
-
-              <div class="d-flex align-items-center">
-                <div class="post-meta">
-                  <p class="post-author">{{ item.author }}</p>
-                  <p class="post-date">
-                    <time datetime="{{ item.date }}">{{ item.date|date:"M d, Y" }}</time>
-                  </p>
-                </div>
-              </div>
-
-              <!-- Pin Button with Icon -->
-              <button class="pin-btn" onclick="togglePin(this)">
-                <i class="fas fa-thumbtack"></i> <!-- Font Awesome Pin Icon -->
+      {% for item in news_items %}
+        <div class="post-item" id="post-item-{{ forloop.counter }}">
+          <article>
+            <div class="post-img">
+              <img src="{{ item.images.url }}" alt="{{ item.title }}" class="img-fluid">
+            </div>
+            <div class="post-content">
+              <h3 class="title">
+                <a href="blog-details.html">{{ item.title }}</a>
+              </h3>
+              <p class="post-category">{{ item.description }}</p>
+            </div>
+            <div class="post-meta">
+              <p class="post-author"><em>{{ item.author }}</em></p>
+              <p class="post-date"><em><time datetime="{{ item.date }}">{{ item.date|date:"M d, Y" }}</time></em></p>
+            </div>
+            <!-- Pin Icon -->
+            <div class="pin-icon" id="pin-icon-{{ forloop.counter }}">
+              <button class="btn btn-sm btn-light pin-btn" data-post-id="{{ forloop.counter }}">
+                <i class="fas fa-thumbtack"></i>
               </button>
-
-            </article>
-          </div><!-- End post list item -->
-        {% endfor %}
-      </div><!-- End recent posts content -->
+            </div>
+          </article>
+        </div>
+      {% endfor %}
     </div>
   </div>
 
-</section><!-- /Recent Posts Section -->
+</section>
 
-<!-- JavaScript for Swipe Scrolling & Pin/Unpin Functionality -->
+<style>
+  /* General Styling */
+  .recent-posts-wrapper {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding: 20px;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .post-item {
+    flex: 0 0 calc(33.333% - 16px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    scroll-snap-align: start;
+    position: relative;
+  }
+
+  .post-img img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .post-content {
+    padding: 16px;
+  }
+
+  .post-meta {
+    padding: 16px;
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* Pin Button */
+  .pin-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+  }
+
+  .pin-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.2em;
+    color: #ff7f50;
+  }
+
+  .pin-btn:hover {
+    color: #ff6347;
+  }
+
+  /* Italic styling for author and date */
+  .post-author,
+  .post-date {
+    font-style: italic;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .post-item {
+      flex: 0 0 100%;
+    }
+    .recent-posts-wrapper {
+      padding: 10px;
+    }
+  }
+</style>
+
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     const postsWrapper = document.getElementById("recent-posts-wrapper");
-    const postsContent = document.querySelector(".recent-posts-content");
+    const pinButtons = document.querySelectorAll(".pin-btn");
     let scrollAmount = 0;
-    let swipeSpeed = 0.5; // Speed of the swipe
-    let isPinned = false; // For pinning/unpinning the posts
-    let isScrolling = true; // Flag to enable or disable scrolling
+    const swipeSpeed = 3; // Slow speed of scrolling
+    let scrollInterval;
 
-    // Function to handle the swipe-like scrolling and manual pin
-    function swipePosts() {
-      if (!isScrolling) return; // Stop the swipe if any post is pinned
-
-      if (scrollAmount >= postsWrapper.scrollWidth - postsWrapper.clientWidth) {
-        scrollAmount = 0; // Reset the scroll position once it reaches the end
-      } else {
-        scrollAmount += swipeSpeed; // Increase scroll amount for the swipe effect
-      }
-
-      postsWrapper.scrollLeft = scrollAmount; // Apply the swipe movement to the wrapper
+    // Function to start the automatic scroll
+    function startAutoScroll() {
+      scrollInterval = setInterval(() => {
+        scrollAmount += swipeSpeed;
+        if (scrollAmount >= postsWrapper.scrollWidth) {
+          scrollAmount = 0;  // Reset scroll when it reaches the end
+        }
+        postsWrapper.scrollLeft = scrollAmount;
+      }, 30);  // Adjust interval for continuous scroll
     }
 
-    // Pin/Unpin function
-    window.togglePin = function(button) {
-      const postItem = button.closest('.post-item');
-      postItem.classList.toggle('pinned'); // Toggle pinned state
-      button.classList.toggle('pinned'); // Change icon based on pinned state
-      isPinned = postItem.classList.contains('pinned');
-      isScrolling = !isPinned; // Stop scrolling when a post is pinned
-    };
+    // Function to stop the scroll for pinned posts
+    function stopAutoScrollForPinnedPosts() {
+      const pinnedPosts = document.querySelectorAll('.pinned');
+      pinnedPosts.forEach(post => {
+        const postId = post.getAttribute('data-post-id');
+        document.getElementById('post-item-' + postId).style.transition = "none"; // Disable transition
+      });
+    }
 
-    // Set an interval to simulate the swipe movement
-    setInterval(swipePosts, 30); // Adjust the interval for smoothness
+    // Button click to pin/unpin each post
+    pinButtons.forEach(pinButton => {
+      pinButton.addEventListener("click", function () {
+        const postId = pinButton.getAttribute('data-post-id');
+        const postItem = document.getElementById('post-item-' + postId);
+        postItem.classList.toggle("pinned");
+
+        // If pinned, disable scrolling for that post, else resume
+        if (postItem.classList.contains("pinned")) {
+          pinButton.innerHTML = '<i class="fas fa-thumbtack"></i>'; // Pin icon
+        } else {
+          pinButton.innerHTML = '<i class="fas fa-thumbtack"></i>'; // Reset pin icon
+        }
+
+        stopAutoScrollForPinnedPosts();
+      });
+    });
+
+    // Initialize the auto scroll on page load
+    startAutoScroll();
   });
 </script>
-
-<!-- Link to Font Awesome CDN -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
 
 {% endblock %}

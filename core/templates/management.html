@@ -5,31 +5,32 @@
   <section id="management" class="management section">
     <div class="container">
       <div class="row gy-5">
+        <!-- Sidebar (Left Section) -->
         <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-          <div class="service-box">
-            <h4>{{ management_detail.title }}</h4>
+          <div class="service-box shadow-lg p-4 rounded">
+            <h4 class="text-success mb-3">{{ management_detail.title }}</h4>
             <div class="services-list">
-              <a href="#" class="active"><i class="bi bi-arrow-right-circle"></i><span>Management</span></a>
-              <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Students Leadership</span></a>
-              <a href="#"><i class="bi bi-arrow-right-circle"></i><span>Academics</span></a>
+              <a href="{% url 'management' %}" class="active"><i class="bi bi-arrow-right-circle"></i><span>Management</span></a>
+              <a href="{% url 'students_leadership' %}"><i class="bi bi-arrow-right-circle"></i><span>Students Leadership</span></a>
+              <a href="{% url 'academics' %}"><i class="bi bi-arrow-right-circle"></i><span>Academics</span></a>
             </div>
           </div>
 
-          <div class="service-box">
-            <h4>Download Catalog</h4>
+          <div class="service-box shadow-lg p-4 rounded mt-4">
+            <h4 class="text-success mb-3">Download Catalog</h4>
             <div class="download-catalog">
               {% if management_detail.catalog_pdf %}
-              <a href="{{ management_detail.catalog_pdf.url }}"><i class="bi bi-filetype-pdf"></i><span>Catalog PDF</span></a>
+              <a href="{{ management_detail.catalog_pdf.url }}" class="d-block mb-2"><i class="bi bi-filetype-pdf"></i><span>Catalog PDF</span></a>
               {% endif %}
               {% if management_detail.catalog_doc %}
-              <a href="{{ management_detail.catalog_doc.url }}"><i class="bi bi-file-earmark-word"></i><span>Catalog DOC</span></a>
+              <a href="{{ management_detail.catalog_doc.url }}" class="d-block"><i class="bi bi-file-earmark-word"></i><span>Catalog DOC</span></a>
               {% endif %}
             </div>
           </div>
 
-          <div class="help-box d-flex flex-column justify-content-center align-items-center">
-            <i class="bi bi-headset help-icon"></i>
-            <h4>Have a Question?</h4>
+          <div class="help-box d-flex flex-column justify-content-center align-items-center mt-4 shadow-lg p-4 rounded">
+            <i class="bi bi-headset help-icon mb-3"></i>
+            <h4 class="text-primary">Have a Question?</h4>
             <p class="d-flex align-items-center mt-2 mb-0">
               <i class="bi bi-telephone me-2"></i> <span>{{ management_detail.phone }}</span>
             </p>
@@ -39,13 +40,116 @@
           </div>
         </div>
 
+        <!-- Main Content (Right Section) -->
         <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
-          <img src="{{ management_detail.image.url }}" alt="" class="img-fluid services-img">
-          <h3>{{ management_detail.title }}</h3>
-          <p>{{ management_detail.description }}</p>
+          <img src="{{ management_detail.image.url }}" alt="" class="img-fluid rounded shadow-sm mb-4 services-img">
+          <h3 class="text-success mb-4">{{ management_detail.title }}</h3>
+          <p class="text-muted">{{ management_detail.description }}</p>
         </div>
       </div>
     </div>
   </section>
 </main>
+
+<!-- Internal CSS -->
+<style>
+    /* General Section Styles */
+    .management {
+        padding: 50px 0;
+        background-color: #f8f9fa;
+    }
+
+    .service-box {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h4 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #28a745;
+    }
+
+    .services-list a {
+        display: flex;
+        align-items: center;
+        color: #333;
+        font-size: 1rem;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .services-list a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .services-list .active {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .download-catalog a {
+        color: #333;
+        font-size: 1rem;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+    }
+
+    .download-catalog a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .help-box {
+        background-color: #e9f7ec;
+        border-radius: 8px;
+    }
+
+    .help-icon {
+        font-size: 3rem;
+        color: #28a745;
+    }
+
+    .help-box h4 {
+        font-size: 1.25rem;
+        color: #28a745;
+        font-weight: 600;
+    }
+
+    .services-img {
+        max-width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .text-muted {
+        color: #6c757d;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .service-box {
+            padding: 20px;
+        }
+
+        .help-box {
+            padding: 20px;
+        }
+
+        .services-img {
+            margin-bottom: 20px;
+        }
+
+        .management .container {
+            padding: 0 15px;
+        }
+    }
+</style>
+
 {% endblock %}

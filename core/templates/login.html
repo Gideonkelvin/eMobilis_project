@@ -3,40 +3,162 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title> 
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-   </head>
-<body>
-  <div class="wrapper">
-    <h2>Login</h2>
-    <form action="" method="post">
+    <title>Login</title>
+    <style>
+      /* General Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: #f7f7f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .wrapper {
+        background: #fff;
+        border-radius: 10px;
+        padding: 25px 30px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .wrapper h2 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .wrapper form .input-box {
+        margin-bottom: 15px;
+        position: relative;
+      }
+
+      .wrapper form .input-box input {
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .wrapper form .input-box input:focus {
+        border-color: #4caf50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+      }
+
+      .wrapper form .policy {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .wrapper form .policy h3 {
+        font-size: 14px;
+        color: #666;
+        margin: 0;
+      }
+
+      .wrapper form .policy input {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+
+      .wrapper form .input-box.button input {
+        background: #4caf50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      .wrapper form .input-box.button input:hover {
+        background: #45a049;
+      }
+
+      .wrapper form .messages {
+        margin-bottom: 15px;
+      }
+
+      .wrapper form .messages .alert {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .wrapper form .messages .alert-success {
+        background: #dff0d8;
+        color: #3c763d;
+      }
+
+      .wrapper form .messages .alert-error {
+        background: #f2dede;
+        color: #a94442;
+      }
+
+      .wrapper form .text h3 {
+        font-size: 14px;
+        color: #666;
+        text-align: center;
+      }
+
+      .wrapper form .text a {
+        color: #4caf50;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .wrapper form .text a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h2>Login</h2>
+      <form action="" method="post">
         {% csrf_token %}
-      <div class="input-box">
-        <input type="text" name="username" placeholder="Enter your name" required>
-      </div>
-      <div class="input-box">
-        <input type="password" name="password" placeholder="Create password" required>
-      </div>
-      <div class="policy">
-        <input type="checkbox">
-        <h3>I accept all terms & condition</h3>
-      </div>
-      <div class="input-box button">
-        <input type="Submit" value="Login Now">
-      </div>
-      {% if messages %}
-			<div class="messages">
-			{% for message in messages %}
-				<div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
-					{{ message }}
-				</div>
-			{% endfor %}
-			</div>
-		{% endif %}
-      <div class="text">
-        <h3>Don't have an account? <a href="{% url 'register' %}">Register now</a></h3>
-      </div>
-    </form>
-  </div>
-</body>
+        <div class="input-box">
+          <input type="text" name="username" placeholder="Enter your name" required>
+        </div>
+        <div class="input-box">
+          <input type="password" name="password" placeholder="Enter password" required>
+        </div>
+        <div class="policy">
+          <input type="checkbox">
+          <h3>I accept all terms & condition</h3>
+        </div>
+        <div class="input-box button">
+          <input type="Submit" value="Login Now">
+        </div>
+        {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+          <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+            {{ message }}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div class="text">
+          <h3>Don't have an account? <a href="{% url 'register' %}">Register now</a></h3>
+        </div>
+      </form>
+    </div>
+  </body>
 </html>
